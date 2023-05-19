@@ -4,6 +4,11 @@ public class Main {
 
     public static void main(String[] args) {
 
+        try {
+            check("demo", "20131", "2013");
+        } catch (WrongLoginException | WrongPasswordException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void check(String login, String password, String confirmPassword)
@@ -17,10 +22,10 @@ public class Main {
         if (!password.matches(REGEX)) {
             throw new WrongPasswordException("неверный пароль");
         }
-        if (!(password.length() > 20)) {
+        if (password.length() > 20) {
             throw new WrongPasswordException("пароль должен быть строго меньше 20 символов");
         }
-        if (password.equals(confirmPassword)) {
+        if (!password.equals(confirmPassword)) {
             throw new WrongPasswordException("пароли не совпадают");
         }
     }
